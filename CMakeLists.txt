@@ -3,9 +3,7 @@ project(orthoism)
 
 Message("################## Setting up orthoism  #########################")
 
-SET(CMAKE_MODULE_PATH   ${CMAKE_MODULE_PATH}
-                        $ENV{OSSIM_DEV_HOME}/ossim/cmake/CMakeModules
-                        ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+SET(CMAKE_MODULE_PATH   ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
@@ -14,14 +12,12 @@ set(SOURCE_FILES)
 set(HEADER_FILES)
 set(OBJECT_LIB)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-if( NOT DEFINED CMAKE_MODULE_PATH )
-   if( EXISTS ${OSSIM_INSTALL_PREFIX} )
-      SET(CMAKE_MODULE_PATH "${OSSIM_INSTALL_PREFIX}/share/ossim/CMakeModules")
-   elseif( EXISTS ${OSSIM_DEV_HOME} )
-      SET(CMAKE_MODULE_PATH "${OSSIM_DEV_HOME}/ossim/cmake/CMakeModules")
-   else()
-      message( FATAL_ERROR "Need either CMAKE_MODULE_PATH, OSSIM_INSTALL_PREFIX or OSSIM_DEV_HOME defined!" )
-   endif()
+if( EXISTS $ENV{OSSIM_INSTALL_PREFIX} )
+   SET(CMAKE_MODULE_PATH "$ENV{OSSIM_INSTALL_PREFIX}/share/ossim/CMakeModules")
+elseif( EXISTS $ENV{OSSIM_DEV_HOME} )
+   SET(CMAKE_MODULE_PATH "$ENV{OSSIM_DEV_HOME}/ossim/cmake/CMakeModules")
+else()
+   message( FATAL_ERROR "Need either CMAKE_MODULE_PATH, OSSIM_INSTALL_PREFIX or OSSIM_DEV_HOME defined!" )
 endif()
 message("Using CMAKE_MODULE_PATH = <${CMAKE_MODULE_PATH}> to locate OSSIM components")
 
