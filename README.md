@@ -1,5 +1,5 @@
 # orthoism
-Brute-force orthorectification using OSSIM
+Brute-force orthorectification using OSSIM. Unlike OSSIM's ubiquitous application `ossim-chipper --op ortho`, this application will perform a map->world->image projection for _every_ output pixel, versus dynamic grid interpolation used by ossim-chipper.
 
 ### How to Build
 Define an environment variable, `OSSIM_INSTALL_PREFIX`, pointing to the install directory that will contain OSSIM. This can be simply `/usr` but you'll need root priveledges when doing the `make install`.
