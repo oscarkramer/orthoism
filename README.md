@@ -1,5 +1,5 @@
 ![orthoism](orthoism.png?raw=true "Title")
-# orthoism
+
 Brute-force orthorectification using OSSIM. Unlike OSSIM's ubiquitous application `ossim-chipper --op ortho`, this application will perform a map->world->image projection for _every_ output pixel. The ossim-chipper app performs a dynamic grid interpolation to reduce the number of expensive projections performed and thus greatly speed up orthorectification.
 
 ### How to Build
