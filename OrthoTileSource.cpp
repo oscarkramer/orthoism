@@ -447,6 +447,8 @@ void OrthoTileSource::resampleBI(const ossimIpt& mapPt, const ossimDpt& P)
       if (p22 == m_nullPix)
          p22 = 0;
       B = dxc*dyc*p11 + dx*dyc*p12 + dx*dy*p22 + dxc*dy*p21;
+      if (B < 0)
+         B = 0;
       m_mapTile->setValue(mapPt.u, mapPt.v, B, band);
    }
 }
