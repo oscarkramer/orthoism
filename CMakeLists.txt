@@ -1,3 +1,7 @@
+#
+# OSSIM_DEV_HOME needs to be defined either with -DOSSIM_DEV_HOME=/path/to/ossim/top or
+# via an environment variable of the same name.
+
 cmake_minimum_required(VERSION 2.8)
 project(orthoism)
 
@@ -12,6 +16,9 @@ set(SOURCE_FILES)
 set(HEADER_FILES)
 set(OBJECT_LIB)
 set(CMAKE_VERBOSE_MAKEFILE ON)
+if (DEFINED OSSIM_DEV_HOME)
+   set(ENV{OSSIM_DEV_HOME} ${OSSIM_DEV_HOME})
+endif()
 if( EXISTS $ENV{OSSIM_DEV_HOME} )
    SET(CMAKE_MODULE_PATH "$ENV{OSSIM_DEV_HOME}/ossim/cmake/CMakeModules")
 elseif( EXISTS $ENV{OSSIM_INSTALL_PREFIX} )
