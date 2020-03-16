@@ -33,7 +33,6 @@ void usage(const char* argv0, int exitCode, string errMsg="")
        "\n  -h              Shows this usage."
        "\n  -r <resampler>  Set the type of resampler: \"NN\"=NearestNeighbor, \"BI\"=Bilinear "
        "\n                  Interpolation (default), \"LWM\"=Linear Weighted Mean 3x3."
-       "\n  -z              Enable output for zenity format."
        "\n"<<endl;
 
    exit(exitCode);
@@ -44,7 +43,6 @@ int main (int argc, char **argv)
 {
    string appName(argv[0]);
    string resampler_type;
-   string zenPrefix;
 
    // Loads OSSIM plugins and preferences:
    auto ossim_init = ossimInit::instance();
@@ -53,7 +51,7 @@ int main (int argc, char **argv)
    // Parse command line:
    static struct option long_options[] = {{ 0, 0, 0, 0}};
    int c, optIndex=0;
-   while ((c = getopt_long(argc, argv, "hr:z", long_options, &optIndex)) != -1)
+   while ((c = getopt_long(argc, argv, "hr:", long_options, &optIndex)) != -1)
    {
       switch (c)
       {
@@ -62,9 +60,6 @@ int main (int argc, char **argv)
          break;
       case 'r':
          resampler_type = optarg;
-         break;
-      case 'z':
-         zenPrefix = "# ";
          break;
       case '?':
          usage(argv[0], 1);
@@ -107,12 +102,9 @@ int main (int argc, char **argv)
       if ((imgSize.x <= 32) && (imgSize.y <= 32))
          writer->setOutputImageType("tiff_strip");
       writer->setPixelType(OSSIM_PIXEL_IS_POINT);
-      //writer->setPixelType(OSSIM_PIXEL_IS_AREA);
 
       ossimSetNotifyStream(&std::cout);
       ossimStdOutProgress prog(0, true);
-      if (!zenPrefix.empty())
-         prog.setZenityOutput();
       writer->addListener(&prog);
       writer->initialize();
 
@@ -128,7 +120,7 @@ int main (int argc, char **argv)
 
       // Stop the timer and report:
       uint64_t timeDelta = (uint64_t) round(timer.time_m() - timeStart);
-      cout << zenPrefix <<"Finished writing '"<<outFile<<"'. Elapsed time was "
+      cout << "\nFinished writing '"<<outFile<<"'. Elapsed time was "
            << timeDelta<<" ms" << endl;
 
       orthoComp = 0;
